@@ -9,7 +9,7 @@ export async function handleRequest(request: Request): Promise<Response> {
   }
   url.hostname = config.origin;
   let response = await fetch(changeUrl(request, url));
-  if (response.status === 200 && url.pathname.startsWith('/docs') && !url.pathname.endsWith('.js')) {
+  if (response.status === 200 && url.pathname.startsWith('/docs') && response.headers.get('content-type') === 'text/html; charset=utf-8') {
     let text = await response.text();
     let redirect_prefix = '<!-- Redirect: ';
     if (text.startsWith(redirect_prefix)) {
@@ -18,7 +18,7 @@ export async function handleRequest(request: Request): Promise<Response> {
       return new Response('301 Moved Permanently', {
         status: 301,
         headers: headers
-      })
+      });
     } else {
       response = new Response(text, response);
       addDefaultHeaders(response);
