@@ -1,0 +1,9 @@
+name = "clickhouse-website"
+type = "webpack"
+account_id = "d4fd593eebab2e3a58a599400c4cd64d"
+workers_dev = true
+webpack_config = "webpack.config.js"
+
+[env.production]
+route = "clickhouse.tech/*"
+zone_id = "4fc6fb1d46e87851605aa7fa69ca6fe0"
