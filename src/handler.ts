@@ -1,4 +1,5 @@
 import { addDefaultHeaders, changeUrl } from './util';
+import { handleCodebrowserRequest } from './codebrowser';
 import { handleMeetFormRequest } from './meet_form';
 import { handlePlaygroundRequest } from './playground';
 import config from './config';
@@ -10,13 +11,15 @@ let hostname_mapping = new Map([
 
 export async function handleRequest(request: Request): Promise<Response> {
   let url = new URL(request.url);
-
   let hostname_handler = hostname_mapping.get(url.hostname);
   if (hostname_handler) {
     return hostname_handler(request);
   }
   if (url.pathname === '/meet-form/') {
     return handleMeetFormRequest(request);
+  }
+  if (url.pathname.startsWith('/codebrowser')) {
+    return handleCodebrowserRequest(request);
   }
   url.hostname = config.origin;
   let response = await fetch(changeUrl(request, url));
