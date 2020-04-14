@@ -12,7 +12,7 @@
   "author": "author",
   "license": "Apache-2.0",
   "devDependencies": {
-    "@cloudflare/workers-types": "^1.0.8",
+    "@cloudflare/workers-types": "^1.0.9",
     "@types/chai": "^4.2.11",
     "@types/mocha": "^7.0.2",
     "chai": "^4.2.0",
@@ -22,7 +22,7 @@
     "service-worker-mock": "^2.0.3",
     "source-map-loader": "^0.2.4",
     "source-map-support": "^0.5.12",
-    "ts-loader": "^6.0.4",
+    "ts-loader": "^6.2.2",
     "typescript": "^3.5.3",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.6"
