@@ -20,9 +20,13 @@ export async function handleCodebrowserRequest(request: Request): Promise<Respon
   }
   addDefaultHeaders(response);
   response.headers.set('cache-control', 'no-transform');
-  response.headers.delete('content-security-policy');
-  response.headers.delete('x-robots-tag');
-  response.headers.delete('access-control-allow-origin');
+  let to_delete = [
+    'x-yc-s3-bucket-tags', 'x-amz-request-id', 'x-amz-meta-computed_md5',
+    'content-security-policy', 'x-robots-tag', 'access-control-allow-origin'
+  ];
+  for (let idx in to_delete) {
+    response.headers.delete(to_delete[idx]);
+  }
   return response;
 
 }
