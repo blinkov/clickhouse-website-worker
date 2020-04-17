@@ -1,6 +1,7 @@
 import { addDefaultHeaders, changeUrl } from './util';
 import { handleCodebrowserRequest } from './codebrowser';
 import { handleMeetFormRequest } from './meet_form';
+import { handleMetrikaCounterRequest } from './metrika';
 import { handlePlaygroundRequest } from './playground';
 import config from './config';
 
@@ -9,14 +10,20 @@ let hostname_mapping = new Map([
   ['birman111-test.clickhouse.tech', handlePlaygroundRequest],
 ]);
 
+let pathname_mapping = new Map([
+  ['/meet-form/', handleMeetFormRequest],
+  ['/js/metrika.js', handleMetrikaCounterRequest],
+]);
+
 export async function handleRequest(request: Request): Promise<Response> {
   let url = new URL(request.url);
   let hostname_handler = hostname_mapping.get(url.hostname);
   if (hostname_handler) {
     return hostname_handler(request);
   }
-  if (url.pathname === '/meet-form/') {
-    return handleMeetFormRequest(request);
+  let pathname_handler = pathname_mapping.get(url.pathname);
+  if (pathname_handler) {
+    return pathname_handler(request);
   }
   if (url.pathname.startsWith('/codebrowser')) {
     return handleCodebrowserRequest(request);
