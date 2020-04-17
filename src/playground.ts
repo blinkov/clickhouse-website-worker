@@ -3,7 +3,14 @@ export async function handlePlaygroundRequest(request: Request) {
   if (!url.pathname.startsWith('/api/')) {
     return fetch(request);
   }
-  url.hostname = 'play-api.clickhouse.tech';
+  let version_match = url.pathname.match(/\/api\/(v[0-9]+\.[0-9]+)\//);
+  if (version_match && version_match.length > 1) {
+    let version = version_match[1].replace('.', '-');
+    url.hostname = `play-api-${version}.clickhouse.tech`;
+  } else {
+    url.hostname = 'play-api.clickhouse.tech';
+  }
+
   url.port = '8443';
   url.pathname = url.pathname.replace('/api/', '/');
 

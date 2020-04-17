@@ -8,7 +8,6 @@ export function addDefaultHeaders(response: Response) {
   for (let idx in to_delete) {
     response.headers.delete(to_delete[idx]);
   }
-  response.headers.set('server', 'nginx');
   response.headers.set('x-content-type-options', 'nosniff');
   response.headers.set('x-frame-options', 'DENY');
   response.headers.set('x-xss-protection', '1; mode=block');
