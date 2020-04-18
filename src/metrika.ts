@@ -8,6 +8,7 @@ export async function handleMetrikaCounterRequest(request: Request): Promise<Res
   addDefaultHeaders(response);
   response.headers.set('cache-control', 'public, max-age=259200');
   response.headers.delete('expires');
+  response.headers.delete('access-control-allow-origin');
   return response;
 
 }
