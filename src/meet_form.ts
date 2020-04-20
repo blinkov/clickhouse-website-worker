@@ -14,7 +14,7 @@ export async function handleMeetFormRequest(request: Request) {
   let content = '';
   let argsKeys = Object.keys(args);
   if (
-    ['name', 'email', 'city', 'company'].filter(n => !argsKeys.includes(n))
+    ['name', 'email', 'city', 'company'].filter((n) => !argsKeys.includes(n))
       .length
   ) {
     return new Response('Bad request', {

@@ -7,7 +7,7 @@ export async function handlePlaygroundRequest(request: Request) {
   if (version_match && version_match.length > 1) {
     let version = version_match[1];
     url.pathname = url.pathname.replace(`/api/${version}/`, '/');
-    version = version.replace('.', '-')
+    version = version.replace('.', '-');
     url.hostname = `play-api-${version}.clickhouse.tech`;
   } else {
     url.hostname = 'play-api.clickhouse.tech';
@@ -15,7 +15,6 @@ export async function handlePlaygroundRequest(request: Request) {
   }
 
   url.port = '8443';
-
 
   const init = {
     body: request.body,

@@ -39,7 +39,9 @@ export async function handleRequest(request: Request): Promise<Response> {
     let redirect_prefix = '<!--[if IE 6]> Redirect: ';
     if (text.startsWith(redirect_prefix)) {
       let target = new URL(request.url);
-      target.pathname = text.substring(redirect_prefix.length).split(' <![endif]-->', 1)[0];
+      target.pathname = text
+        .substring(redirect_prefix.length)
+        .split(' <![endif]-->', 1)[0];
       return Response.redirect(target.toString(), 301);
     } else {
       response = new Response(text, response);
@@ -51,12 +53,15 @@ export async function handleRequest(request: Request): Promise<Response> {
     let version_match = url.pathname.match(/^\/docs\/(v[0-9]+\.[0-9]+)\//);
     if (version_match && version_match.length > 1) {
       let target = new URL(request.url);
-      target.pathname = url.pathname.replace(version_match[1] + '/', '')
+      target.pathname = url.pathname.replace(version_match[1] + '/', '');
       return Response.redirect(target.toString(), 301);
     }
   }
   response = new Response(response.body, response);
-  if ((url.pathname != '/benchmark.html') && (url.pathname != '/benchmark_hardware.html')) {
+  if (
+    url.pathname != '/benchmark.html' &&
+    url.pathname != '/benchmark_hardware.html'
+  ) {
     // TODO: get rid of exception for benchmarks
     addDefaultHeaders(response);
   }
