@@ -38,7 +38,9 @@ export async function handleRequest(request: Request): Promise<Response> {
     let text = await response.text();
     let redirect_prefix = '<!--[if IE 6]> Redirect: ';
     if (text.startsWith(redirect_prefix)) {
-      return Response.redirect(text.substring(redirect_prefix.length).split(' <![endif]-->', 1)[0], 301);
+      let target = new URL(request.url);
+      target.pathname = text.substring(redirect_prefix.length).split(' <![endif]-->', 1)[0];
+      return Response.redirect(target.toString(), 301);
     } else {
       response = new Response(text, response);
       addDefaultHeaders(response);
