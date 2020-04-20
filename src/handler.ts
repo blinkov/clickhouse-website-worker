@@ -36,12 +36,12 @@ export async function handleRequest(request: Request): Promise<Response> {
     response.headers.get('content-type') === 'text/html; charset=utf-8'
   ) {
     let text = await response.text();
-    let redirect_prefix = '<!-- Redirect: ';
+    let redirect_prefix = '<!--[if IE 6]> Redirect: ';
     if (text.startsWith(redirect_prefix)) {
       let headers = new Headers();
       headers.set(
         'location',
-        text.substring(redirect_prefix.length).split(' -->', 1)[0],
+        text.substring(redirect_prefix.length).split(' <![endif]-->', 1)[0],
       );
       return new Response('301 Moved Permanently', {
         status: 301,
