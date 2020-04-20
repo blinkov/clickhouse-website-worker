@@ -38,19 +38,19 @@ export async function handleRequest(request: Request): Promise<Response> {
     let text = await response.text();
     let redirect_prefix = '<!--[if IE 6]> Redirect: ';
     if (text.startsWith(redirect_prefix)) {
-      let headers = new Headers();
-      headers.set(
-        'location',
-        text.substring(redirect_prefix.length).split(' <![endif]-->', 1)[0],
-      );
-      return new Response('301 Moved Permanently', {
-        status: 301,
-        headers: headers,
-      });
+      return Response.redirect(text.substring(redirect_prefix.length).split(' <![endif]-->', 1)[0], 301);
     } else {
       response = new Response(text, response);
       addDefaultHeaders(response);
       return response;
+    }
+  }
+  if (response.status === 404) {
+    let version_match = url.pathname.match(/^\/docs\/(v[0-9]+\.[0-9]+)\//);
+    if (version_match && version_match.length > 1) {
+      let target = new URL(request.url);
+      target.pathname = url.pathname.replace(version_match[1] + '/', '')
+      return Response.redirect(target.toString(), 301);
     }
   }
   response = new Response(response.body, response);
