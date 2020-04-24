@@ -58,12 +58,6 @@ export async function handleRequest(request: Request): Promise<Response> {
     }
   }
   response = new Response(response.body, response);
-  if (
-    url.pathname != '/benchmark.html' &&
-    url.pathname != '/benchmark_hardware.html'
-  ) {
-    // TODO: get rid of exception for benchmarks
-    addDefaultHeaders(response);
-  }
+  addDefaultHeaders(response);
   return response;
 }
