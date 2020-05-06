@@ -1,9 +1,11 @@
 import { addDefaultHeaders, changeUrl } from './util';
 import { handleCodebrowserRequest } from './codebrowser';
+import { handleFaviconRequest } from './favicon';
 import { handleMeetFormRequest } from './meet_form';
 import { handleMetrikaCounterRequest } from './metrika';
 import { handlePlaygroundRequest } from './playground';
 import config from './config';
+
 
 let hostname_mapping = new Map([
   ['play.clickhouse.tech', handlePlaygroundRequest],
@@ -27,6 +29,9 @@ export async function handleRequest(request: Request): Promise<Response> {
   }
   if (url.pathname.startsWith('/codebrowser')) {
     return handleCodebrowserRequest(request);
+  }
+  if (url.pathname.startsWith('/favicon')) {
+    return handleFaviconRequest(request);
   }
   url.hostname = config.origin;
   let response = await fetch(changeUrl(request, url));
