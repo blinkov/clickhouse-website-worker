@@ -22,7 +22,7 @@ export async function handlePlaygroundRequest(request: Request) {
     method: request.method,
   };
 
-  let response = await fetch(url.toString(), init);
+  const response = await fetch(url.toString(), init);
 
   return new Response(response.body, {
     status: response.status,

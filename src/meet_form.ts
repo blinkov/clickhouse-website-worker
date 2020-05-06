@@ -5,7 +5,7 @@ export async function handleMeetFormRequest(request: Request) {
       statusText: 'Bad request',
     });
   }
-  let url = new URL('https://api.sendgrid.com/v3/mail/send');
+  const url = new URL('https://api.sendgrid.com/v3/mail/send');
   let newHdrs = new Headers();
   newHdrs.set('Authorization', 'Bearer ' + SENDGRID_TOKEN);
   newHdrs.set('Content-Type', 'application/json');
@@ -26,8 +26,8 @@ export async function handleMeetFormRequest(request: Request) {
     content += key.charAt(0).toUpperCase() + key.slice(1);
     content += ':\r\n' + args[key] + '\r\n\r\n';
   }
-  let domain = 'yandex-team.ru';
-  let body = {
+  const domain = 'yandex-team.ru';
+  const body = {
     personalizations: [
       {
         to: [
@@ -60,7 +60,7 @@ export async function handleMeetFormRequest(request: Request) {
     method: 'POST',
   };
 
-  let response = await fetch(url, init);
+  let response = await fetch(url.toString(), init);
   let status = 200;
   if (response.status != 202) {
     status = 200;

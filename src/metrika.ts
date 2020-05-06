@@ -3,8 +3,8 @@ import { addDefaultHeaders, changeUrl } from './util';
 export async function handleMetrikaCounterRequest(
   request: Request,
 ): Promise<Response> {
-  let url = new URL('https://mc.yandex.ru/metrika/tag.js');
-  let cf = {
+  const url = new URL('https://mc.yandex.ru/metrika/tag.js');
+  const cf = {
     cf: {
       cacheEverything: true,
       cacheTtl: 86400,

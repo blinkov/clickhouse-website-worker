@@ -5,7 +5,7 @@ export async function handleCodebrowserRequest(
   request: Request,
 ): Promise<Response> {
   let url = new URL(request.url);
-  let cf = {
+  const cf = {
     cf: {
       cacheEverything: true,
       cacheTtl: 14400,
@@ -29,7 +29,7 @@ export async function handleCodebrowserRequest(
   }
   addDefaultHeaders(response);
   response.headers.set('cache-control', 'no-transform');
-  let to_delete = [
+  const to_delete = [
     'x-yc-s3-bucket-tags',
     'x-amz-request-id',
     'x-amz-meta-computed_md5',
