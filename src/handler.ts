@@ -30,7 +30,7 @@ export async function handleRequest(request: Request): Promise<Response> {
   if (url.pathname.startsWith('/codebrowser')) {
     return handleCodebrowserRequest(request);
   }
-  if (url.pathname.startsWith('/favicon')) {
+  if (url.pathname.startsWith('/favicon/')) {
     return handleFaviconRequest(request);
   }
   url.hostname = config.origin;
