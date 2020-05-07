@@ -64,5 +64,8 @@ export async function handleRequest(request: Request): Promise<Response> {
   }
   response = new Response(response.body, response);
   addDefaultHeaders(response);
+  if (url.pathname.endsWith('/amp/')) {
+    response.headers.set('cache-control', 'public, max-age=86400')
+  }
   return response;
 }
