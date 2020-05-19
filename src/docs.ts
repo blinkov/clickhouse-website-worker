@@ -66,7 +66,8 @@ export async function handleDocsRequest(
   if (request.method == 'POST' && url.pathname.endsWith('/rate/')) {
     return handleArticleRating(request);
   }
-  url.hostname = config.origin;
+  url.hostname = 'blinkov-test.clickhouse.tech'; // TODO: config.origin;
+  url.protocol = 'http';
   let response = await fetch(changeUrl(request, url));
   if (
     response.status === 200 &&
