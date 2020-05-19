@@ -7,6 +7,9 @@ function getRatingKey(url: URL): string | null {
   );
   if (url_match && url_match.length > 1) {
     let key = url_match[1];
+    if (key.endsWith('amp/')) {
+      key = key.slice(0, -4);
+    }
     if (key.length > 2) {
       key = key.replace(/^\/|\/$/g, '');
     }
