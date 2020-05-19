@@ -48,6 +48,6 @@ export function changeUrl(req: Request, new_url: URL): Request {
 export function round(value: number, digits: number) {
   const multiplicator = Math.pow(10, digits);
   value = parseFloat((value * multiplicator).toFixed(11));
-  const result = (Math.round(value) / multiplicator);
-  return +(result.toFixed(digits));
+  const result = Math.round(value) / multiplicator;
+  return +result.toFixed(digits);
 }

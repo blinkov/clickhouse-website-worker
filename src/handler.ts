@@ -7,7 +7,6 @@ import { handleMetrikaCounterRequest } from './metrika';
 import { handlePlaygroundRequest } from './playground';
 import config from './config';
 
-
 const hostname_mapping = new Map([
   ['play.clickhouse.tech', handlePlaygroundRequest],
   ['birman111-test.clickhouse.tech', handlePlaygroundRequest],
@@ -21,7 +20,7 @@ const pathname_mapping = new Map([
 const prefix_mapping = new Map([
   ['/docs', handleDocsRequest],
   ['/codebrowser', handleCodebrowserRequest],
-  ['/favicon/', handleFaviconRequest]
+  ['/favicon/', handleFaviconRequest],
 ]);
 
 export async function handleRequest(request: Request): Promise<Response> {

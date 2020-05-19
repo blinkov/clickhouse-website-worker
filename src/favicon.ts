@@ -1,13 +1,12 @@
 import { addDefaultHeaders, changeUrl } from './util';
 
-
 export async function handleFaviconRequest(request: Request) {
   const domain = new URL(request.url).pathname.replace('/favicon/', '');
   const url = new URL(`https://www.google.com/s2/favicons?domain=${domain}`);
   const cf = {
     cf: {
       cacheEverything: true,
-      cacheTtl: 86400 * 3
+      cacheTtl: 86400 * 3,
     },
   };
   let response = await fetch(changeUrl(request, url), cf);

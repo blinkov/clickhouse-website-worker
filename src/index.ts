@@ -3,13 +3,13 @@ import config from './config';
 import { changeUrl } from './util';
 import { sendExceptionToSentry } from './sentry';
 
-addEventListener('fetch', event => {
-    event.respondWith(handleEvent(event));
+addEventListener('fetch', (event) => {
+  event.respondWith(handleEvent(event));
 });
 
-async function handleEvent(event : FetchEvent) {
+async function handleEvent(event: FetchEvent) {
   try {
-    return await handleRequest(event.request)
+    return await handleRequest(event.request);
   } catch (e) {
     event.waitUntil(sendExceptionToSentry(e));
     return fallbackResponse(event.request);
