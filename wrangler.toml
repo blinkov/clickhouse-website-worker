@@ -13,5 +13,5 @@ route = "clickhouse.tech/*"
 zone_id = "4fc6fb1d46e87851605aa7fa69ca6fe0"
 kv-namespaces = [
     { binding = "RATING", id = "fab071214bbc4bc8bce73f8986701aec" },
-    { binding = "RATING_PER_IP", id = "fab071214bbc4bc8bce73f8986701aec" }
+    { binding = "RATING_PER_IP", id = "a8e11f15962b49e28c114714872edfb7" }
 ]
