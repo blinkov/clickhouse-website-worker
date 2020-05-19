@@ -24,14 +24,7 @@ async function handleArticleRating(
     } else {
       key = '/';
     }
-    let args;
-    let text = await request.text(); // TODO: remove fallback
-    try {
-      args = JSON.parse(text); // await request.json()
-    } catch (_) {
-
-      args = {rating: text.split('=')[1]};
-    }
+    let args = await request.json();
     let rating = Math.round(args.rating);
     if (rating >= 1 && rating <= 5) {
       let ratings_object;
