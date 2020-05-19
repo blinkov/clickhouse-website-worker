@@ -1,11 +1,11 @@
-name = "clickhouse-website"
+name = "clickhouse-website-production"
 type = "webpack"
 account_id = "d4fd593eebab2e3a58a599400c4cd64d"
 workers_dev = true
 webpack_config = "webpack.config.js"
 kv-namespaces = [
-	 { binding = "RATING", id = "11a8aef802fa45b89904113bd4be4566" },
-	 { binding = "RATING_PER_IP", id = "bfbab0338f6a47dda76cb37d7c6e556a" }
+	 { binding = "RATING", id = "fab071214bbc4bc8bce73f8986701aec" },
+	 { binding = "RATING_PER_IP", id = "fab071214bbc4bc8bce73f8986701aec" }
 ]
 
 [env.production]
