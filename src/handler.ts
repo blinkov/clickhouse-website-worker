@@ -1,5 +1,6 @@
 import { addDefaultHeaders, changeUrl } from './util';
 import { handleCodebrowserRequest } from './codebrowser';
+import { handleDocsRequest } from './docs';
 import { handleFaviconRequest } from './favicon';
 import { handleMeetFormRequest } from './meet_form';
 import { handleMetrikaCounterRequest } from './metrika';
@@ -17,6 +18,12 @@ const pathname_mapping = new Map([
   ['/js/metrika.js', handleMetrikaCounterRequest],
 ]);
 
+const prefix_mapping = new Map([
+  ['/docs', handleDocsRequest],
+  ['/codebrowser', handleCodebrowserRequest],
+  ['/favicon/', handleFaviconRequest]
+]);
+
 export async function handleRequest(request: Request): Promise<Response> {
   let url = new URL(request.url);
   const hostname_handler = hostname_mapping.get(url.hostname);
@@ -27,41 +34,13 @@ export async function handleRequest(request: Request): Promise<Response> {
   if (pathname_handler) {
     return pathname_handler(request);
   }
-  if (url.pathname.startsWith('/codebrowser')) {
-    return handleCodebrowserRequest(request);
-  }
-  if (url.pathname.startsWith('/favicon/')) {
-    return handleFaviconRequest(request);
+  for (const [prefix, prefix_handler] of prefix_mapping.entries()) {
+    if (url.pathname.startsWith(prefix)) {
+      return prefix_handler(request);
+    }
   }
   url.hostname = config.origin;
   let response = await fetch(changeUrl(request, url));
-  if (
-    response.status === 200 &&
-    url.pathname.startsWith('/docs') &&
-    response.headers.get('content-type') === 'text/html; charset=utf-8'
-  ) {
-    let text = await response.text();
-    let redirect_prefix = '<!--[if IE 6]> Redirect: ';
-    if (text.startsWith(redirect_prefix)) {
-      let target = new URL(request.url);
-      target.pathname = text
-        .substring(redirect_prefix.length)
-        .split(' <![endif]-->', 1)[0];
-      return Response.redirect(target.toString(), 301);
-    } else {
-      response = new Response(text, response);
-      addDefaultHeaders(response);
-      return response;
-    }
-  }
-  if (response.status === 404) {
-    let version_match = url.pathname.match(/^\/docs\/(v[0-9]+\.[0-9]+)\//);
-    if (version_match && version_match.length > 1) {
-      let target = new URL(request.url);
-      target.pathname = url.pathname.replace(version_match[1] + '/', '');
-      return Response.redirect(target.toString(), 301);
-    }
-  }
   response = new Response(response.body, response);
   addDefaultHeaders(response);
   return response;
