@@ -87,7 +87,7 @@ export async function handleDocsRequest(request: Request): Promise<Response> {
       return Response.redirect(target.toString(), 301);
     } else {
       let rating_count = 1;
-      let rating_value = 3;
+      let rating_value = 4;
       let key = getRatingKey(url);
       if (key) {
         const ratings = await RATING.get(key);
