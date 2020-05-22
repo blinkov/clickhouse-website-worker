@@ -11,14 +11,9 @@ async function handleEvent(event: FetchEvent) {
   try {
     return await handleRequest(event.request);
   } catch (e) {
-    event.waitUntil(sendExceptionToSentry(e));
+    event.waitUntil(sendExceptionToSentry(e, event.request));
     return fallbackResponse(event.request);
   }
-}
-
-function handleError(error: Error, event: FetchEvent) {
-  event.respondWith(fallbackResponse(event.request));
-  event.waitUntil(sendExceptionToSentry(error));
 }
 
 async function fallbackResponse(request: Request): Promise<Response> {

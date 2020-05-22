@@ -1,6 +1,6 @@
-function getStacktrace(e: Error): Array<object> {
+function getStacktrace(error: Error): Array<object> {
   const matcher = /at (?:(.+)\s+\()?(?:(.+?):(\d+)(?::(\d+))?|([^)]+))\)?/;
-  const raw_stack = e.stack || '';
+  const raw_stack = error.stack || '';
   return raw_stack
     .split('\n')
     .slice(1)
@@ -28,20 +28,24 @@ function getStacktrace(e: Error): Array<object> {
     .reverse();
 }
 
-export function sendExceptionToSentry(e: Error): Promise<Response> {
+export function sendExceptionToSentry(error: Error, request: Request): Promise<Response> {
   const sentry_key = '97b8a00a8d02479794e34ea6838ecd2e';
   const sentry_url = `https://o388870.ingest.sentry.io/api/5246652/store/?sentry_key=${sentry_key}&sentry_version=7`;
-  const error_type = e.name;
-  const error_message = e && e.message ? e.message : 'Unknown';
+  const error_type = error.name;
+  const error_message = error && error.message ? error.message : 'Unknown';
   const body = {
     logger: 'javascript',
     platform: 'javascript',
+    request: {
+      method: request.method.toUpperCase(),
+      url: request.url.toString()
+    },
     exception: {
       values: [
         {
           type: 'Error',
           value: `${error_type}: ${error_message}`,
-          stacktrace: { frames: getStacktrace(e) },
+          stacktrace: { frames: getStacktrace(error) },
         },
       ],
     },
