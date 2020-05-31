@@ -19,13 +19,20 @@ export async function handlePlaygroundRequest(request: Request) {
   const init = {
     body: request.body,
     headers: request.headers,
-    method: request.method,
+    method: request.method
   };
 
   const response = await fetch(url.toString(), init);
+  let headers = new Headers();
+  const origin = request.headers.get('origin');
+  if (origin) {
+    headers.set('access-control-allow-origin', origin);
+    headers.set('vary', 'Origin');
+  }
 
   return new Response(response.body, {
     status: response.status,
     statusText: response.statusText,
+    headers
   });
 }
