@@ -33,6 +33,7 @@ export async function recordDownload(request: Request)  {
       protocol: url.protocol,
       package_kind: path.substr(-3, 3),
       country: request.headers.get('cf-ipcountry') || '',
+      device_type: request.headers.get('cf-device-type') || '',
       raw_ip: request.headers.get('cf-connecting-ip') || '',
       raw_forwarded_for: request.headers.get('x-forwarded-for') || '',
       user_agent: request.headers.get('user-agent') || '',
