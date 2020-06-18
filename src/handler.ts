@@ -5,10 +5,12 @@ import { handleFaviconRequest } from './favicon';
 import { handleMeetFormRequest } from './meet_form';
 import { handleMetrikaCounterRequest } from './metrika';
 import { handlePlaygroundRequest } from './playground';
+import { handleRepoRequest } from './repo';
 import config from './config';
 
 const hostname_mapping = new Map([
   ['play.clickhouse.tech', handlePlaygroundRequest],
+  ['repo.clickhouse.tech', handleRepoRequest],
   ['birman111-test.clickhouse.tech', handlePlaygroundRequest],
 ]);
 
